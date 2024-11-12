@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kb.member.mapper.UserMapper">
+
+    <resultMap id="userResultMap" type="com.kb.member.dto.User">
+        <id property="userNo"                column="USER_NO" />
+        <result property="userId"            column="USER_ID" />
+        <result property="userPw"            column="USER_PW" />
+        <result property="userName"          column="USER_NAME" />
+        <result property="email"             column="EMAIL" />
+        <result property="birth"             column="BIRTH" />
+        <result property="userImg"           column="USER_IMG" />
+        <result property="nickname"          column="NICKNAME" />
+        <result property="accountNo"         column="ACCOUNT_NO" />
+    </resultMap>
+
+    <select id="selectUserAll" resultMap="userResultMap">
+        SELECT
+            USER_NO, USER_ID, USER_PW, USER_NAME, EMAIL, BIRTH, USER_IMG, NICKNAME, ACCOUNT_NO
+        FROM
+            User
+    </select>
+
+    <select id="selectById" resultMap="userResultMap" parameterType="string">
+        SELECT
+            USER_NO, USER_ID, USER_PW, USER_NAME, EMAIL, BIRTH, USER_IMG, NICKNAME, ACCOUNT_NO
+        FROM
+            User
+        WHERE USER_ID = #{userId}
+    </select>
+
+    <insert id="insertUser" parameterType="com.kb.member.dto.User">
+        INSERT INTO User (USER_NO, USER_ID, USER_PW, USER_NAME, EMAIL, BIRTH, USER_IMG, NICKNAME, ACCOUNT_NO)
+        VALUES (default, #{userId}, #{userPw}, #{userName}, #{email}, #{birth}, #{userImg}, #{nickname}, #{accountNo})
+    </insert>
+
+    <update id="updateUser" parameterType="com.kb.member.dto.User">
+        UPDATE User
+        SET
+            USER_NAME = #{userName},
+            EMAIL = #{email},
+            BIRTH = #{birth},
+            USER_IMG = #{userImg},
+            NICKNAME = #{nickname},
+            ACCOUNT_NO = #{accountNo}
+        WHERE USER_NO = #{userNo}
+    </update>
+
+    <update id="updatePassword" parameterType="com.kb.member.dto.ChangePasswordDTO">
+        UPDATE User
+        SET
+            USER_PW = #{newPassword}
+        WHERE USER_ID = #{userId}
+    </update>
+
+    <update id="deleteUser" parameterType="long">
+        UPDATE User
+        SET
+            STATUS = 'n'
+        WHERE USER_NO = #{userNo}
+    </update>
+
+</mapper>

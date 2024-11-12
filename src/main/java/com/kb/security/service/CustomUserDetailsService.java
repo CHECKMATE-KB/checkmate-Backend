@@ -1,7 +1,7 @@
 package com.kb.security.service;
 
-import com.kb.member.dto.Member;
-import com.kb.member.mapper.MemberMapper;
+import com.kb.member.dto.User;
+import com.kb.member.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,15 +14,14 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    final private MemberMapper mapper;
+    private final UserMapper mapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = mapper.selectById(username);
-        if(member == null) {
+        User user = mapper.selectById(username);
+        if (user == null) {
             throw new UsernameNotFoundException(username + "은 없는 id 입니다.");
         }
-        return member;
+        return user;
     }
-
 }

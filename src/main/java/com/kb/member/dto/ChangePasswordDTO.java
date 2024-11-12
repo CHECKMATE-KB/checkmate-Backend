@@ -12,4 +12,8 @@ public class ChangePasswordDTO {
     String id;
     String oldPassword;
     String newPassword;
+
+    public String getUserId() {
+        return "";
+    }
 }

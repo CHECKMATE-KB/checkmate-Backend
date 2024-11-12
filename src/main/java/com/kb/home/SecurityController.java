@@ -1,6 +1,6 @@
 package com.kb.home;
 
-import com.kb.member.dto.Member;
+import com.kb.member.dto.User;
 import lombok.extern.log4j.Log4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -21,16 +21,16 @@ public class SecurityController {
         return ResponseEntity.ok("All can access everybody");
     }
 
-    @GetMapping("/member")
-    public ResponseEntity<String> doMember(Authentication authentication) {
-        UserDetails userDetails = (UserDetails)authentication.getPrincipal();
+    @GetMapping("/user")
+    public ResponseEntity<String> doUser(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         log.info("username = " + userDetails.getUsername());
         return ResponseEntity.ok(userDetails.getUsername());
     }
 
     @GetMapping("/admin")
-    public ResponseEntity<Member> doAdmin(@AuthenticationPrincipal Member member) {
-        log.info("username = " + member);
-        return ResponseEntity.ok(member);
+    public ResponseEntity<User> doAdmin(@AuthenticationPrincipal User user) {
+        log.info("username = " + user);
+        return ResponseEntity.ok(user);
     }
 }
