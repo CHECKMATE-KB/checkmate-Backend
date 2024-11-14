@@ -14,4 +14,9 @@ public interface UserMapper {
     void deleteUser(long userNo);
 
     void updatePassword(ChangePasswordDTO changePassword);
+
+    boolean existsByUserId(String userId); // 아이디 중복 여부 확인
+    boolean existsByEmail(String email); // 이메일 중복 여부 확인
+
+    boolean existsByNickname(String nickname);
 }

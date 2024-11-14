@@ -63,4 +63,19 @@
         WHERE USER_NO = #{userNo}
     </update>
 
+    <!-- 아이디 중복 여부 확인 -->
+    <select id="existsByUserId" parameterType="string" resultType="boolean">
+        SELECT COUNT(*) > 0 FROM User WHERE USER_ID = #{userId}
+    </select>
+
+    <!-- 이메일 중복 여부 확인 -->
+    <select id="existsByEmail" parameterType="string" resultType="boolean">
+        SELECT COUNT(*) > 0 FROM User WHERE EMAIL = #{email}
+    </select>
+
+    <select id="existsByNickname" parameterType="string" resultType="boolean">
+        SELECT COUNT(*) > 0 FROM User WHERE NICKNAME = #{nickname}
+    </select>
+
+
 </mapper>
