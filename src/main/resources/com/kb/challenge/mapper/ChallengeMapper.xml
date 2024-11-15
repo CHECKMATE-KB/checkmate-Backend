@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kb.challenge.mapper.ChallengeMapper">
+    <resultMap id="availableChallenge" type="com.kb.challenge.dto.Challenge">
+        <id property="ccNo"             column="CC_NO" />
+        <result property="ccName"       column="CC_NAME"/>
+        <result property="chLimit"      column="CH_LIMIT"/>
+    </resultMap>
+
+    <select id="getAllChallenges" resultMap="availableChallenge">
+        SELECT CC_NO, CC_NAME, CH_LIMIT
+        FROM Challenge_category CC
+        JOIN Challenge C ON CC.CC_NO=C.CC_NO
+    </select>
+
+    <insert id="createTeam" parameterType="com.kb.challenge.dto.ChallengeTeam">
+        INSERT INTO Team (TEAM_NAME, TEAM_START, TEAM_END)
+        VALUES(#{teamName}, #{teamStart}, #{teamEnd});
+    </insert>
+
+    <update id="createChallenge" parameterType="com.kb.challenge.dto.ChallengeDTO">
+        UPDATE Challenge
+        SET CC_NO = #{ccNo}, CH_LIMIT= #{chLimit}
+        WHERE TEAM_NO = #{teamNo};
+    </update>
+
+</mapper>
