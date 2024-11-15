@@ -5,11 +5,17 @@ import com.kb.member.dto.ChangePasswordDTO;
 import com.kb.member.dto.User;
 import com.kb.member.dto.UserDTO;
 import com.kb.member.service.UserService;
+import com.kb.security.util.JwtProcessor;
 import io.swagger.annotations.Api;
+import java.util.HashMap;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +35,7 @@ public class UserController {
     public String LOCATION;
 
     private final UserService service;
+    private final JwtProcessor jwtProcessor;
 
     @PostMapping("/join")
     public ResponseEntity<User> join(@RequestBody UserDTO userDTO) throws IllegalAccessException {
@@ -37,10 +44,50 @@ public class UserController {
         return ResponseEntity.ok(registeredUser);
     }
 
-    @GetMapping("/checkid/{id}")
-    public ResponseEntity<Boolean> checkDuplicate(@PathVariable String id) {
-        return ResponseEntity.ok().body(service.checkDuplicate(id));
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
+        User user = service.login(userDTO.toUser());
+        if (user != null) {
+            String token = jwtProcessor.generateToken(user.getUserId());
+            Map<String, Object> response = new HashMap<>();
+            response.put("token", token);
+            response.put("userNo", user.getUserNo()); // userNo를 응답에 포함
+            return ResponseEntity.ok(response); // JWT와 userNo 응답
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("아이디 또는 비밀번호가 일치하지 않습니다.");
+        }
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate(); // 세션 무효화
+        }
+        return ResponseEntity.ok("로그아웃 성공");
+    }
+
+
+    @GetMapping("/checkid/{userId}")
+    public ResponseEntity<Boolean> checkDuplicateUserId(@PathVariable String userId) {
+        boolean isDuplicate = service.checkDuplicateUserId(userId);
+        return ResponseEntity.ok(isDuplicate);
+    }
+
+    // 이메일 중복 체크 엔드포인트
+    @GetMapping("/checkemail/{email}")
+    public ResponseEntity<Boolean> checkDuplicateEmail(@PathVariable String email) {
+        boolean isDuplicate = service.checkDuplicateEmail(email);
+        return ResponseEntity.ok(isDuplicate);
+    }
+
+    @GetMapping("/checknickname/{nickname}")
+    public ResponseEntity<Boolean> checkDuplicateNickname(@PathVariable String nickname) {
+        boolean isDuplicate = service.checkDuplicateNickname(nickname);
+        return ResponseEntity.ok(isDuplicate);
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<User> get(@PathVariable String id) {

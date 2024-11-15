@@ -34,8 +34,8 @@ public class UserService {
     public User login(User user) {
         User savedUser = mapper.selectById(user.getUserId());
         if (passwordEncoder.matches(user.getUserPw(), savedUser.getUserPw())) {
-            savedUser.setUserPw("");
-            savedUser.setUserNo(0);
+//            savedUser.setUserPw("");
+//            savedUser.setUserNo(0);
             return savedUser;
         } else {
             return null;
@@ -113,5 +113,17 @@ public class UserService {
         }
         changePassword.setNewPassword(passwordEncoder.encode(changePassword.getNewPassword()));
         mapper.updatePassword(changePassword);
+    }
+
+    public boolean checkDuplicateUserId(String userId) {
+        return mapper.existsByUserId(userId);
+    }
+
+    public boolean checkDuplicateEmail(String email) {
+        return mapper.existsByEmail(email);
+    }
+
+    public boolean checkDuplicateNickname(String nickname) {
+        return mapper.existsByNickname(nickname); // 닉네임이 존재하면 true 반환
     }
 }
