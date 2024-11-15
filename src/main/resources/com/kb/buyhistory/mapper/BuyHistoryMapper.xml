@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kb.buyhistory.mapper.BuyHistoryMapper">
+
+    <resultMap id="BuyHistoryResultMap" type="com.kb.buyhistory.dto.BuyHistoryDTO">
+        <id column="HISTORY_NO" property="historyNo" />
+        <result column="HISTORY_DATE" property="historyDate" />
+        <result column="PRICE" property="price" />
+        <result column="HISTORY_CATEGORY" property="historyCategory" />
+        <result column="CARD_NO" property="cardNo" />
+    </resultMap>
+
+    <select id="findBuyHistoryByUserNo" resultMap="BuyHistoryResultMap">
+        SELECT
+            bh.HISTORY_NO,
+            bh.HISTORY_DATE,
+            bh.PRICE,
+            bh.HISTORY_CATEGORY,
+            bh.CARD_NO
+        FROM BuyHistory bh
+                 JOIN Card c ON bh.CARD_NO = c.CARD_NO
+        WHERE c.USER_NO = #{userNo};
+    </select>
+
+</mapper>
