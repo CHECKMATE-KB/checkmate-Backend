@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.kb.team.mapper.TeamMapper">
+    <resultMap id="teamMembers" type="com.kb.team.dto.TeamMember">
+        <id property="teamNo"           column="TEAM_NO"/>
+        <result property="userNo"       column="USER_NO"/>
+        <result property="userName"     column="USER_NAME"/>
+        <result property="userImg"      column="USER_IMG"/>
+        <result property="challengePoint" column="CH_POINT"/>
+        <result property="qzPoint"      column="QZ_POINT"/>
+        <result property="totalPoint"   column="CH_TOTAL"/>
+    </resultMap>
+
+    <resultMap id="curChallenge" type="com.kb.team.dto.CurChallenge">
+        <id property="teamNo"           column="TEAM_NO"/>
+        <result property="ccNo"       column="CC_NO"/>
+        <result property="ccName"     column="CC_NAME"/>
+        <result property="price"      column="CH_LIMIT"/>
+        <result property="start" column="CH_START"/>
+        <result property="end"      column="CH_END"/>
+    </resultMap>
+
+    <resultMap id="teamRank" type="com.kb.team.dto.TeamRank">
+        <id property="teamNo"           column="TEAM_NO"/>
+        <result property="userName"     column="USER_NAME"/>
+        <result property="challengePoint" column="CH_POINT"/>
+        <result property="qzPoint"      column="QZ_POINT"/>
+        <result property="totalPoint"   column="CH_TOTAL"/>
+    </resultMap>
+    
+    <resultMap id="teamHistory" type="com.kb.team.dto.TeamHistory">
+        <id property="teamNo"           column="TEAM_NO"/>
+        <result property="userName"     column="USER_NAME"/>
+        <result property="cardNo"       column="CARD_NO"/>
+        <result property="userNo"       column="USER_NO"/>
+        <collection property="cardUsages" ofType="com.kb.team.dto.CardUsage">
+            <id property="historyNo"           column="HISTORY_NO"/>
+            <result property="historyDate"       column="HISTORY_DATE"/>
+            <result property="price"       column="PRICE"/>
+            <result property="category"       column="HISTORY_CATEGORY"/>
+        </collection>
+    </resultMap>
+    
+    <select id ="getTeamMembers" resultMap="teamMembers">
+        SELECT TeamUser.TEAM_NO,
+               User.USER_NO,
+               User.USER_NAME,
+               User.USER_IMG,
+               TeamUser.CH_POINT,
+               TeamUser.QZ_POINT,
+               TeamUser.CH_TOTAL
+        FROM TeamUser T
+        JOIN User U ON T.USER_NO=U.USER_NO
+        WHERE T.TEAM_NO=#{teamId}
+    </select>
+
+    <select id ="getTeamRanks" resultMap="teamRank">
+        SELECT TeamUser.TEAM_NO,
+               User.USER_NAME,
+               TeamUser.CH_POINT,
+               TeamUser.QZ_POINT,
+               TeamUser.CH_TOTAL
+        FROM TeamUser T
+        JOIN User U ON T.USER_NO=U.USER_NO
+        WHERE T.TEAM_NO=#{teamId}
+        ORDER BY T.CH_TOTAL
+    </select>
+    
+    <select id="getCurChallenge" resultType="com.kb.team.dto.CurChallenge">
+        SELECT T.TEAM_NO,
+               C.CC_NO,
+               CC_NAME,
+               CH_LIMIT,
+               CH_START,
+               CH_END
+        FROM Challenge C
+        JOIN Challenge_category CC ON C.CC_NO=CC.CC_NO
+        WHERE T.TEAM_NO=#{teamId}
+    </select>
+
+
+    <select id="getTeamWithMembersAndHistory" resultMap="teamHistory">
+        SELECT
+            t.TEAM_NO,
+            t.TEAM_NAME,
+            u.USER_NO,
+            u.USER_NAME,
+            bh.HISTORY_DATE,
+            bh.PRICE,
+            bh.HISTORY_CATEGORY
+        FROM Team t
+                 JOIN TeamUser tu ON t.TEAM_NO = tu.TEAM_NO
+                 JOIN User u ON tu.USER_NO = u.USER_NO
+                 LEFT JOIN BuyHistory bh ON u.USER_NO = bh.USER_NO
+        WHERE t.TEAM_NO = #{teamNo}
+        ORDER BY bh.HISTORY_DATE DESC
+    </select>
+
+</mapper>
