@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kb.card.mapper.CardMapper">
+    <select id="findCardsByUserNo" resultType="com.kb.card.dto.CardDTO">
+        SELECT
+        CARD_NO,
+        USER_NO,
+        CARD_NAME,
+        CARD_NUMBER,
+        EXPIRY_DATE,
+        CARD_TYPE,
+        CARD_COMPANY,
+        BILLING_DATE,
+        REGISTER_DATE
+        FROM
+        Card
+        WHERE
+        USER_NO = #{userNo}
+    </select>
+
+    <insert id="insertCard">
+        INSERT INTO Card (USER_NO, CARD_NAME, CARD_NUMBER, EXPIRY_DATE, CARD_TYPE, CARD_COMPANY, BILLING_DATE)
+        VALUES (#{userNo}, #{cardName}, #{cardNumber}, #{expiryDate}, #{cardType}, #{cardCompany}, #{billingDate})
+    </insert>
+</mapper>
