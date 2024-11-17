@@ -2,7 +2,8 @@ package com.kb.challenge.controller;
 
 
 import com.kb.challenge.dto.Challenge;
-import com.kb.challenge.dto.ChallengeTeam;
+import com.kb.challenge.dto.ChallengeCategory;
+import com.kb.challenge.dto.ChallengeTeamDTO;
 import com.kb.challenge.dto.ChallengeDTO;
 import com.kb.challenge.service.ChallengeService;
 import io.swagger.annotations.Api;
@@ -23,17 +24,16 @@ public class ChallengeController {
     private final ChallengeService service;
 
     @PostMapping("/team/create")
-    public ResponseEntity<Integer> createTeam(@RequestBody ChallengeTeam team) {
+    public ResponseEntity<Integer> createTeam(@RequestBody ChallengeTeamDTO team) {
         return ResponseEntity.ok(service.createTeam(team));
     }
 
     @GetMapping("/available")
-    public ResponseEntity<List<Challenge>> getAvailableTeams() {
+    public ResponseEntity<List<ChallengeCategory>> getAvailableTeams() {
         return ResponseEntity.ok().body(service.getAllChallenges());
     }
-
-    @PostMapping("/select")
-    public ResponseEntity<Integer> createTeam(@RequestBody ChallengeDTO challenge) {
-        return ResponseEntity.ok(service.createChallenge(challenge));
+    @PatchMapping("/select")
+    public ResponseEntity<Integer> createCC(@RequestBody ChallengeDTO challenge) {
+        return ResponseEntity.ok(service.updateChallengePrice(challenge));
     }
 }

@@ -1,11 +1,17 @@
 package com.kb.challenge.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 
 public class Challenge {
     private int ccNo;
-    private String ccName;
-    private String chLimit;
+    private int teamNo;
+    private int chLimit;
+    private String chStart;
+    private String chEnd;
 }
