@@ -12,5 +12,5 @@ public class CardUsage {
     private int historyNo;
     private String historyDate;
     private int price;
-    private String category;
+    private String historyCategory;
 }

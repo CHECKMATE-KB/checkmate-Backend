@@ -10,7 +10,7 @@
     </resultMap>
 
     <select id="getAllChallenges" resultMap="availableChallenge">
-        SELECT C.CC_NO, CC_NAME
+        SELECT CC_NO, CC_NAME
         FROM Challenge_category CC
     </select>
 
