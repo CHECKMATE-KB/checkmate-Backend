@@ -8,8 +8,7 @@ import lombok.*;
 @Setter
 @ToString
 
-public class ChallengeDTO {
-    private int teamNo;
+public class ChallengeCategory {
     private int ccNo;
-    private int chLimit;
+    private String ccName;
 }
