@@ -46,32 +46,32 @@
     </resultMap>
     
     <select id ="getTeamMembers" resultMap="teamMembers">
-        SELECT TeamUser.TEAM_NO,
-               User.USER_NO,
-               User.USER_NAME,
-               User.USER_IMG,
-               TeamUser.CH_POINT,
-               TeamUser.QZ_POINT,
-               TeamUser.CH_TOTAL
+        SELECT T.TEAM_NO,
+               U.USER_NO,
+               U.USER_NAME,
+               U.USER_IMG,
+               T.CH_POINT,
+               T.QZ_POINT,
+               T.CH_TOTAL
         FROM TeamUser T
         JOIN User U ON T.USER_NO=U.USER_NO
         WHERE T.TEAM_NO=#{teamId}
     </select>
 
     <select id ="getTeamRanks" resultMap="teamRank">
-        SELECT TeamUser.TEAM_NO,
-               User.USER_NAME,
-               TeamUser.CH_POINT,
-               TeamUser.QZ_POINT,
-               TeamUser.CH_TOTAL
+        SELECT T.TEAM_NO,
+               U.USER_NAME,
+               T.CH_POINT,
+               T.QZ_POINT,
+               T.CH_TOTAL
         FROM TeamUser T
         JOIN User U ON T.USER_NO=U.USER_NO
         WHERE T.TEAM_NO=#{teamId}
-        ORDER BY T.CH_TOTAL
+        ORDER BY T.CH_TOTAL DESC;
     </select>
     
     <select id="getCurChallenge" resultType="com.kb.team.dto.CurChallenge">
-        SELECT T.TEAM_NO,
+        SELECT C.TEAM_NO,
                C.CC_NO,
                CC_NAME,
                CH_LIMIT,
@@ -79,25 +79,31 @@
                CH_END
         FROM Challenge C
         JOIN Challenge_category CC ON C.CC_NO=CC.CC_NO
-        WHERE T.TEAM_NO=#{teamId}
+        WHERE C.TEAM_NO=#{teamId}
     </select>
 
 
-    <select id="getTeamWithMembersAndHistory" resultMap="teamHistory">
-        SELECT
-            t.TEAM_NO,
-            t.TEAM_NAME,
-            u.USER_NO,
-            u.USER_NAME,
-            bh.HISTORY_DATE,
-            bh.PRICE,
-            bh.HISTORY_CATEGORY
-        FROM Team t
-                 JOIN TeamUser tu ON t.TEAM_NO = tu.TEAM_NO
-                 JOIN User u ON tu.USER_NO = u.USER_NO
-                 LEFT JOIN BuyHistory bh ON u.USER_NO = bh.USER_NO
-        WHERE t.TEAM_NO = #{teamNo}
-        ORDER BY bh.HISTORY_DATE DESC
+    <select id="getTeamMembersIds" resultType="Integer">
+        SELECT USER_NO
+        FROM TeamUser
+        WHERE TEAM_NO=#{teamId}
     </select>
 
+    <select id="getCardNo" resultType="Integer">
+        SELECT CARD_NO
+        FROM Card
+        WHERE USER_NO=#{userId};
+    </select>
+
+    <select id="getCardUsage" resultType="com.kb.team.dto.CardUsage">
+        SELECT HISTORY_NO, HISTORY_DATE, PRICE, HISTORY_CATEGORY
+        FROM BuyHistory
+        WHERE CARD_NO=#{cardNo}
+    </select>
+
+    <select id="getUserName" resultType="string">
+        SELECT USER_NAME
+        FROM User
+        WHERE USER_NO=#{userId};
+    </select>
 </mapper>

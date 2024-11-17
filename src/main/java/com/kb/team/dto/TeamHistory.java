@@ -11,7 +11,7 @@ import java.util.List;
 @ToString
 
 public class TeamHistory {
-    private int teamNo;
+    private long teamNo;
     private int userNo;
     private String userName;
     private int cardNo;
