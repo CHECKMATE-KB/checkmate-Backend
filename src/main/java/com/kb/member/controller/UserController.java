@@ -52,6 +52,8 @@ public class UserController {
             Map<String, Object> response = new HashMap<>();
             response.put("token", token);
             response.put("userNo", user.getUserNo()); // userNo를 응답에 포함
+            response.put("nickName", user.getNickname());
+
             return ResponseEntity.ok(response); // JWT와 userNo 응답
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
