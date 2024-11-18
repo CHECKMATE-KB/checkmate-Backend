@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.kb.quiz.mapper.QuizMapper">
+    <resultMap id="allQuiz" type="com.kb.quiz.dto.Quiz">
+        <id property="qzNo"           column="QZ_NO"/>
+        <result property="qzCategory"       column="QZ_CATEGORY"/>
+        <result property="qzContent"     column="QZ_CONTENT"/>
+        <result property="qzAnswer"      column="QZ_ANSWER"/>
+        <result property="timeLimit" column="TIME_LIMIT"/>
+    </resultMap>
+
+    <select id="getAllQuiz" resultMap="allQuiz">
+        SELECT *
+        FROM Quiz;
+    </select>
+
+    <select id="getCategoryQuiz" resultMap="allQuiz">
+        SELECT *
+        FROM Quiz
+        WHERE QZ_CATEGORY=#{categoryId};
+    </select>
+
+</mapper>

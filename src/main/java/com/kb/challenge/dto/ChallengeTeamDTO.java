@@ -11,10 +11,10 @@ import java.util.List;
 @Setter
 @ToString
 public class ChallengeTeamDTO {
-    private int ccNo;
-    private int chLimit;
+    private List<Integer> ccNo;
+    private List<Integer> chLimit;
     private String teamName;
     private String teamStart;
     private String teamEnd;
-    private List<Integer> members;
+    private List<String> members;
 }

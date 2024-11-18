@@ -6,6 +6,7 @@ import com.kb.member.dto.User;
 
 public interface UserMapper {
     User selectById(String userId);
+    int selectByUserID(String userId);
 
     int insertUser(User user);
 

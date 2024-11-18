@@ -3,6 +3,8 @@ package com.kb.challenge.service;
 
 import com.kb.challenge.dto.*;
 import com.kb.challenge.mapper.ChallengeMapper;
+import com.kb.member.mapper.UserMapper;
+import com.kb.member.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,7 @@ import java.util.NoSuchElementException;
 @Service
 public class ChallengeService {
     private final ChallengeMapper mapper;
-
+    private final UserMapper userMapper;
     public int createTeam(ChallengeTeamDTO team) {
         // 팀생성
         int result=mapper.createTeam(team);
@@ -21,26 +23,39 @@ public class ChallengeService {
         int teamNumber= mapper.getTeamNumber(team.getTeamName());
 
         // 팀유저 생성
-        for(int memberId : team.getMembers()) {
+
+        for(String member : team.getMembers()) {
+            // member -> UserNo 로 바꿔주기
+            int userNo=userMapper.selectByUserID(member);
+
+            System.out.println("ddd : " + member);
+            System.out.println("ooo : "+userNo);
+
             ChallengeTeamUser teamUser = new ChallengeTeamUser();
             teamUser.setChTotal(0);
             teamUser.setQzPoint(0);
             teamUser.setChTotal(0);
             teamUser.setTeamId(teamNumber);
-            teamUser.setUserId(memberId);
+            teamUser.setUserId(userNo);
             result = mapper.createTeamUser(teamUser);
             if(result==0) throw new NoSuchElementException();
         }
 
         // 챌린지 생성
-        Challenge challenge = new Challenge();
-        challenge.setTeamNo(teamNumber);
-        challenge.setCcNo(team.getCcNo());
-        challenge.setChLimit(team.getChLimit());
-        challenge.setChStart(team.getTeamStart());
-        challenge.setChEnd(team.getTeamEnd());
-        result=mapper.createChallenge(challenge);
-
+        List<Integer> ccNos = team.getCcNo();
+        List<Integer> chLimits= team.getChLimit();
+        for(int i=0; i<ccNos.size(); i++) {
+            int ccNo=ccNos.get(i);
+            int chLimit=chLimits.get(i);
+            Challenge challenge = new Challenge();
+            challenge.setTeamNo(teamNumber);
+            challenge.setCcNo(ccNo);
+            challenge.setChLimit(chLimit);
+            challenge.setChStart(team.getTeamStart());
+            challenge.setChEnd(team.getTeamEnd());
+            result=mapper.createChallenge(challenge);
+            if(result==0) throw new NoSuchElementException();
+        }
 
 
         return result;
