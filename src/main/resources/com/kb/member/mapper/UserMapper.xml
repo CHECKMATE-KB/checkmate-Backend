@@ -77,5 +77,19 @@
         SELECT COUNT(*) > 0 FROM User WHERE NICKNAME = #{nickname}
     </select>
 
+    <update id="resetUserPoint" parameterType="long">
+        UPDATE User
+        SET POINT = 0
+        WHERE USER_NO = #{userNo}
+    </update>
+
+    <select id="selectByUserNo" resultMap="userResultMap" parameterType="long">
+        SELECT
+            USER_NO, USER_ID, USER_PW, USER_NAME, EMAIL, BIRTH, USER_IMG, NICKNAME, ACCOUNT_NO, POINT
+        FROM
+            User
+        WHERE
+            USER_NO = #{userNo}
+    </select>
 
 </mapper>

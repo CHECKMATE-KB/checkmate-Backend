@@ -126,4 +126,14 @@ public class UserService {
     public boolean checkDuplicateNickname(String nickname) {
         return mapper.existsByNickname(nickname); // 닉네임이 존재하면 true 반환
     }
+
+    public void resetUserPoint(Long userNo) {
+        User user = mapper.selectByUserNo(userNo); // userNo로 사용자 조회
+        if (user == null) {
+            throw new NoSuchElementException("User not found with userNo: " + userNo);
+        }
+        mapper.resetUserPoint(userNo); // 포인트 0으로 업데이트
+    }
+
+
 }

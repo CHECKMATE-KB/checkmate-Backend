@@ -19,4 +19,9 @@ public interface UserMapper {
     boolean existsByEmail(String email); // 이메일 중복 여부 확인
 
     boolean existsByNickname(String nickname);
+
+
+    User selectByUserNo(Long userNo);
+
+    void resetUserPoint(Long userNo);
 }
