@@ -32,6 +32,12 @@
         WHERE USER_ID = #{userId}
     </select>
 
+    <select id="selectByUserID" parameterType="String" resultType="Integer">
+        SELECT USER_NO
+        FROM User
+        WHERE USER_ID=#{userId}
+    </select>
+
     <insert id="insertUser" parameterType="com.kb.member.dto.User">
         INSERT INTO User (USER_NO, USER_ID, USER_PW, USER_NAME, EMAIL, BIRTH, USER_IMG, NICKNAME, ACCOUNT_NO)
         VALUES (default, #{userId}, #{userPw}, #{userName}, #{email}, #{birth}, #{userImg}, #{nickname}, #{accountNo})
