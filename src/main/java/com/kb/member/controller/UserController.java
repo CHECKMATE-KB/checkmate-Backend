@@ -44,6 +44,19 @@ public class UserController {
         return ResponseEntity.ok(registeredUser);
     }
 
+    @GetMapping("/point/{userNo}")
+    public ResponseEntity<?> resetUserPoint(@PathVariable Long userNo) {
+        try {
+            service.resetUserPoint(userNo); // 서비스 메서드 호출
+            return ResponseEntity.ok("User points have been reset to 0.");
+        } catch (Exception e) {
+            log.error("Failed to reset user points for userNo: {}", userNo, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to reset user points.");
+        }
+    }
+
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
         User user = service.login(userDTO.toUser());
