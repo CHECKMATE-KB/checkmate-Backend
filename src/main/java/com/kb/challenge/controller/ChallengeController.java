@@ -1,7 +1,6 @@
 package com.kb.challenge.controller;
 
 
-import com.kb.challenge.dto.Challenge;
 import com.kb.challenge.dto.ChallengeCategory;
 import com.kb.challenge.dto.ChallengeTeamDTO;
 import com.kb.challenge.dto.ChallengeDTO;
