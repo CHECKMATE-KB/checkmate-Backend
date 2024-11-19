@@ -27,7 +27,9 @@ public interface UserMapper {
 
     void resetUserPoint(Long userNo);
 
+
     void updateNickname(@Param("userNo") Long userNo,  @Param("newNickname") String newNickname);
 
     void updateEmail(@Param("userNo")Long userNo,  @Param("newEmail")String newEmail);
+
 }

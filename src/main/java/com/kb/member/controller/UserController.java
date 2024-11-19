@@ -56,6 +56,7 @@ public class UserController {
         }
     }
 
+
     @PutMapping("/{id}/nickname")
     public ResponseEntity<?> updateNickname(@PathVariable Long id, @RequestBody Map<String, String> request) {
         try {
@@ -81,6 +82,7 @@ public class UserController {
                     .body("이메일 업데이트에 실패했습니다.");
         }
     }
+
 
 
     @PostMapping("/login")

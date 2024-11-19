@@ -136,6 +136,7 @@ public class UserService {
     }
 
 
+
     public void updateNickname(Long userNo, String newNickname) {
         try {
             mapper.updateNickname(userNo, newNickname);
@@ -151,5 +152,6 @@ public class UserService {
             throw new RuntimeException("이메일 업데이트 중 오류 발생", e);
         }
     }
+
 
 }
