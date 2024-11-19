@@ -154,4 +154,7 @@ public class UserService {
     }
 
 
+    public User getUserInfoByUserNo(Long userNo) {
+        return mapper.findUserByUserNo(userNo);
+    }
 }

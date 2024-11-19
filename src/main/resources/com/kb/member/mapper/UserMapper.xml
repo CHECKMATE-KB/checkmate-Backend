@@ -111,6 +111,12 @@
         WHERE USER_NO = #{userNo}
     </update>
 
+    <select id="findUserByUserNo" parameterType="long" resultType="com.kb.member.dto.User">
+        SELECT *
+        FROM User
+        WHERE user_no = #{userNo}
+    </select>
+
 
 
 </mapper>
