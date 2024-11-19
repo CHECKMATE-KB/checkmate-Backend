@@ -102,6 +102,19 @@ public class UserController {
         }
     }
 
+    @GetMapping("/info/{userNo}")
+    public ResponseEntity<?> getUserInfo(@PathVariable Long userNo) {
+        try {
+            User user = service.getUserInfoByUserNo(userNo);
+            return ResponseEntity.ok(user); // 사용자의 모든 정보를 반환
+        } catch (Exception e) {
+            log.error("Failed to retrieve user information for userNo: {}", userNo, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to retrieve user information.");
+        }
+    }
+
+
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
