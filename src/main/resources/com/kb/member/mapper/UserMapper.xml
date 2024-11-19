@@ -98,4 +98,19 @@
             USER_NO = #{userNo}
     </select>
 
+
+    <update id="updateNickname">
+        UPDATE User
+        SET NICKNAME = #{newNickname}
+        WHERE USER_NO = #{userNo}
+    </update>
+
+    <update id="updateEmail">
+        UPDATE USER
+        SET EMAIL = #{newEmail}
+        WHERE USER_NO = #{userNo}
+    </update>
+
+
+
 </mapper>
