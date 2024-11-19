@@ -31,4 +31,8 @@ public class BuyHistoryController {
         }
         return ResponseEntity.ok(buyHistoryList);
     }
+
+
+
+
 }

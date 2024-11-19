@@ -17,9 +17,9 @@ public class CardDTO {
     private Long userNo;          // 사용자 번호 (Foreign Key)
     private String cardName;      // 카드 이름
     private String cardNumber;    // 카드 번호
-    private Date expiryDate;      // 유효기간
+    private String expiryDate;      // 유효기간
     private String cardType;      // 카드 타입
     private String cardCompany;   // 카드 발급사
-    private Integer billingDate;  // 청구일
+    private String billingDate;  // 청구일
     private Timestamp registerDate; // 카드 등록일
 }
