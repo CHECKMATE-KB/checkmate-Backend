@@ -136,4 +136,20 @@ public class UserService {
     }
 
 
+    public void updateNickname(Long userNo, String newNickname) {
+        try {
+            mapper.updateNickname(userNo, newNickname);
+        } catch (Exception e) {
+            throw new RuntimeException("닉네임 업데이트 중 오류 발생", e);
+        }
+    }
+
+    public void updateEmail(Long userNo, String newEmail) {
+        try {
+            mapper.updateEmail(userNo, newEmail);
+        } catch (Exception e) {
+            throw new RuntimeException("이메일 업데이트 중 오류 발생", e);
+        }
+    }
+
 }
