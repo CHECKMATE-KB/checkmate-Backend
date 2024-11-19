@@ -44,6 +44,45 @@ public class UserController {
         return ResponseEntity.ok(registeredUser);
     }
 
+    @GetMapping("/point/{userNo}")
+    public ResponseEntity<?> resetUserPoint(@PathVariable Long userNo) {
+        try {
+            service.resetUserPoint(userNo); // 서비스 메서드 호출
+            return ResponseEntity.ok("User points have been reset to 0.");
+        } catch (Exception e) {
+            log.error("Failed to reset user points for userNo: {}", userNo, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to reset user points.");
+        }
+    }
+
+    @PutMapping("/{id}/nickname")
+    public ResponseEntity<?> updateNickname(@PathVariable Long id, @RequestBody Map<String, String> request) {
+        try {
+            String newNickname = request.get("nickname");
+            service.updateNickname(id, newNickname);
+            return ResponseEntity.ok(1);
+        } catch (Exception e) {
+            log.error("Failed to update nickname for userId: {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("닉네임 업데이트에 실패했습니다.");
+        }
+    }
+
+    @PutMapping("/{id}/email")
+    public ResponseEntity<?> updateEmail(@PathVariable Long id, @RequestBody Map<String, String> request) {
+        try {
+            String newEmail = request.get("email");
+            service.updateEmail(id, newEmail);
+            return ResponseEntity.ok("이메일이 성공적으로 업데이트되었습니다.");
+        } catch (Exception e) {
+            log.error("Failed to update email for userId: {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("이메일 업데이트에 실패했습니다.");
+        }
+    }
+
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
         User user = service.login(userDTO.toUser());

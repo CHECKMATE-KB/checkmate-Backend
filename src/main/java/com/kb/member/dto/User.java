@@ -24,6 +24,7 @@ public class User implements UserDetails {
     private String userImg;     // 프로필 이미지
     private String nickname;    // 닉네임
     private long accountNo;     // 계좌번호
+    private int point;
 
     private String status;      // 활성화 여부 (Y/N)
     private Date createDate;    // 생성일
