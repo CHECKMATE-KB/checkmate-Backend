@@ -38,6 +38,15 @@
         WHERE USER_ID=#{userId}
     </select>
 
+    <select id="selectUserCHPoint" parameterType="Long" resultType="Integer">
+        SELECT SUM(CH_TOTAL)
+        FROM User U
+        JOIN TeamUser TU ON U.USER_NO=TU.USER_NO
+        WHERE U.USER_NO=#{userNo}
+        GROUP BY U.USER_NO;
+    </select>
+
+
     <insert id="insertUser" parameterType="com.kb.member.dto.User">
         INSERT INTO User (USER_NO, USER_ID, USER_PW, USER_NAME, EMAIL, BIRTH, USER_IMG, NICKNAME, ACCOUNT_NO)
         VALUES (default, #{userId}, #{userPw}, #{userName}, #{email}, #{birth}, #{userImg}, #{nickname}, #{accountNo})

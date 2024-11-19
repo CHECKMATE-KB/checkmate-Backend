@@ -25,6 +25,7 @@ public interface UserMapper {
 
     User selectByUserNo(Long userNo);
 
+    int selectUserCHPoint(Long userNo); // 유저의 챌린지 포인트를 보여줌 -> 포인트리로 포인트 변환시 사용
     void resetUserPoint(Long userNo);
 
 
