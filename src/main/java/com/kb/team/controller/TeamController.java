@@ -1,9 +1,6 @@
 package com.kb.team.controller;
 
-import com.kb.team.dto.CurChallenge;
-import com.kb.team.dto.TeamHistory;
-import com.kb.team.dto.TeamMember;
-import com.kb.team.dto.TeamRank;
+import com.kb.team.dto.*;
 import com.kb.team.service.TeamService;
 import io.swagger.annotations.Api;
 import io.swagger.models.Response;
@@ -33,7 +30,7 @@ public class TeamController {
     }
 
     @GetMapping("/challenge/{teamNo}")
-    public ResponseEntity<CurChallenge> getChallengeInfo(@PathVariable long teamNo) {
+    public ResponseEntity<List<CurChallenge>> getChallengeInfo(@PathVariable long teamNo) {
         return ResponseEntity.ok(service.getCurChallenge(teamNo));
     }
 
@@ -46,5 +43,9 @@ public class TeamController {
     @GetMapping("/spend/{teamNo}")
     public ResponseEntity<List<TeamHistory>> getTeamSpendHistory(@PathVariable long teamNo) {
         return ResponseEntity.ok(service.getTeamHistory(teamNo));
+    }
+    @GetMapping("/spend/category/{teamNo}")
+    public ResponseEntity<List<TeamSpend>> getTeamSpendCategory(@PathVariable long teamNo) {
+        return ResponseEntity.ok(service.getTeamSpendCategory(teamNo));
     }
 }

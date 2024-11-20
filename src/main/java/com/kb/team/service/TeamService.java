@@ -20,7 +20,7 @@ public class TeamService {
         return teamMembers;
     }
 
-    public CurChallenge getCurChallenge(long teamId) {
+    public List<CurChallenge> getCurChallenge(long teamId) {
         return mapper.getCurChallenge(teamId);
     }
 
@@ -52,5 +52,14 @@ public class TeamService {
 //        List<TeamHistory> teamHistories = mapper.getTeamHistory(teamId);
 
         return teamHistories;
+    }
+    public List<TeamSpend> getTeamSpendCategory(long teamId) {
+        List<Integer> memberIds= mapper.getTeamMembersIds(teamId);
+        List<TeamSpend> teamSpends = new ArrayList<>();
+        for(Integer memberId : memberIds) {
+            List<TeamSpend> teamSpend = mapper.selectTeamSpend(memberId);
+            teamSpends.addAll(teamSpend);
+        }
+        return teamSpends;
     }
 }

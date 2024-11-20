@@ -8,8 +8,9 @@ public interface TeamMapper {
     List<TeamMember> getTeamMembers(Long teamId);
     List<Integer> getTeamMembersIds(Long teamId);
     List<TeamRank> getTeamRanks(Long teamId);
-    CurChallenge getCurChallenge(Long teamId);
+    List<CurChallenge> getCurChallenge(Long teamId);
     String getUserName(int userId);
+    List<TeamSpend> selectTeamSpend(int userId);
     List<Integer> getCardNo(int userId);
     List<CardUsage> getCardUsage(int cardNo);
 }
