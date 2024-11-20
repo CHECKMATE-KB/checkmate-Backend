@@ -33,4 +33,8 @@ public interface UserMapper {
     void updateEmail(@Param("userNo")Long userNo,  @Param("newEmail")String newEmail);
 
     User findUserByUserNo(Long userNo);
+
+    Integer getUserPoint(@Param("userNo") Long userNo);
+
+    void updateUserPoint(@Param("userNo") Long userNo, @Param("newPoint") int newPoint);
 }

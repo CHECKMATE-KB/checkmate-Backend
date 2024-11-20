@@ -117,6 +117,20 @@
         WHERE user_no = #{userNo}
     </select>
 
+    <!-- 사용자 포인트 가져오기 -->
+    <select id="getUserPoint" resultType="Integer">
+        SELECT POINT
+        FROM User
+        WHERE USER_NO = #{userNo}
+    </select>
+
+    <!-- 사용자 포인트 업데이트 -->
+    <update id="updateUserPoint">
+        UPDATE User
+        SET POINT = #{newPoint}
+        WHERE USER_NO = #{userNo}
+    </update>
+
 
 
 </mapper>

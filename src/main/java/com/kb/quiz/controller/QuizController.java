@@ -20,6 +20,7 @@ import java.util.List;
 @Api(value = "QuizController", tags = "퀴즈 정보") // swagger
 public class QuizController {
     private final QuizService service;
+
     @GetMapping("")
     public ResponseEntity<List<Quiz>> getAllQuiz() {
         return ResponseEntity.ok(service.getAllQuizzes());
@@ -29,6 +30,14 @@ public class QuizController {
     public ResponseEntity<List<Quiz>> getAllQuiz(@PathVariable Integer categoryId) {
         return ResponseEntity.ok(service.getQuizzesByCategory(categoryId));
     }
+
+    @GetMapping("/update-point/{userNo}/{correctCount}")
+    public ResponseEntity<Integer> updateUserPoint(@PathVariable Long userNo, @PathVariable int correctCount) {
+        int pointsToAdd = correctCount * 10; // 맞춘 문제 개수당 10점
+        service.updateUserPoint(userNo, pointsToAdd);
+        return ResponseEntity.ok(pointsToAdd);
+    }
+
 
 
 }
