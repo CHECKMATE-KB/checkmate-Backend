@@ -100,6 +100,7 @@ public class UserController {
             response.put("token", token);
             response.put("userNo", user.getUserNo()); // userNo를 응답에 포함
             response.put("nickName", user.getNickname());
+            response.put("userImg", user.getUserImg());
 
             return ResponseEntity.ok(response); // JWT와 userNo 응답
         } else {
