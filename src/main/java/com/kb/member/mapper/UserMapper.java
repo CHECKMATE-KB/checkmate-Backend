@@ -25,6 +25,7 @@ public interface UserMapper {
 
     User selectByUserNo(Long userNo);
 
+    int selectUserCHPoint(Long userNo); // 유저의 챌린지 포인트를 보여줌 -> 포인트리로 포인트 변환시 사용
     void resetUserPoint(Long userNo);
 
 
@@ -33,4 +34,8 @@ public interface UserMapper {
     void updateEmail(@Param("userNo")Long userNo,  @Param("newEmail")String newEmail);
 
     User findUserByUserNo(Long userNo);
+
+    Integer getUserPoint(@Param("userNo") Long userNo);
+
+    void updateUserPoint(@Param("userNo") Long userNo, @Param("newPoint") int newPoint);
 }

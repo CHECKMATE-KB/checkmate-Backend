@@ -19,14 +19,16 @@
         <id property="teamNo"           column="TEAM_NO"/>
         <result property="ccNo"       column="CC_NO"/>
         <result property="ccName"     column="CC_NAME"/>
-        <result property="price"      column="CH_LIMIT"/>
-        <result property="start" column="CH_START"/>
-        <result property="end"      column="CH_END"/>
+        <result property="imgUrl"     column="IMG_URL"/>
+        <result property="chLimit"      column="CH_LIMIT"/>
+        <result property="chStart" column="CH_START"/>
+        <result property="chEnd"      column="CH_END"/>
     </resultMap>
 
     <resultMap id="teamRank" type="com.kb.team.dto.TeamRank">
         <id property="teamNo"           column="TEAM_NO"/>
         <result property="userName"     column="USER_NAME"/>
+        <result property="userImg"     column="USER_IMG"/>
         <result property="challengePoint" column="CH_POINT"/>
         <result property="qzPoint"      column="QZ_POINT"/>
         <result property="totalPoint"   column="CH_TOTAL"/>
@@ -41,10 +43,19 @@
             <id property="historyNo"           column="HISTORY_NO"/>
             <result property="historyDate"       column="HISTORY_DATE"/>
             <result property="price"       column="PRICE"/>
-            <result property="category"       column="HISTORY_CATEGORY"/>
+            <result property="historyCategory"       column="HISTORY_CATEGORY"/>
         </collection>
     </resultMap>
-    
+
+
+    <resultMap id="teamSpendCategory" type="com.kb.team.dto.TeamSpend">
+        <id property="userName"           column="USER_NAME"/>
+        <result property="spendTotal"     column="SPEND_TOTAL"/>
+        <result property="category"     column="HISTORY_CATEGORY"/>
+    </resultMap>
+
+
+
     <select id ="getTeamMembers" resultMap="teamMembers">
         SELECT T.TEAM_NO,
                U.USER_NO,
@@ -61,6 +72,7 @@
     <select id ="getTeamRanks" resultMap="teamRank">
         SELECT T.TEAM_NO,
                U.USER_NAME,
+               U.USER_IMG,
                T.CH_POINT,
                T.QZ_POINT,
                T.CH_TOTAL
@@ -70,10 +82,11 @@
         ORDER BY T.CH_TOTAL DESC;
     </select>
     
-    <select id="getCurChallenge" resultType="com.kb.team.dto.CurChallenge">
+    <select id="getCurChallenge" resultMap="curChallenge">
         SELECT C.TEAM_NO,
                C.CC_NO,
                CC_NAME,
+               CC.IMG_URL,
                CH_LIMIT,
                CH_START,
                CH_END
@@ -105,5 +118,15 @@
         SELECT USER_NAME
         FROM User
         WHERE USER_NO=#{userId};
+    </select>
+
+    <select id="selectTeamSpend" resultMap="teamSpendCategory">
+        SELECT U.USER_NAME, SUM(B.PRICE) AS SPEND_TOTAL, B.HISTORY_CATEGORY
+        FROM User U
+                 JOIN Card C ON U.USER_NO=C.USER_NO
+                 JOIN BuyHistory B ON C.CARD_NO=B.CARD_NO
+        WHERE U.USER_NO=#{userId}
+        GROUP BY U.USER_NAME, B.HISTORY_CATEGORY
+        ORDER BY B.HISTORY_CATEGORY;
     </select>
 </mapper>

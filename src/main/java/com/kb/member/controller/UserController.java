@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @RestController
@@ -55,6 +56,11 @@ public class UserController {
                     .body("Failed to reset user points.");
         }
     }
+    @GetMapping("/point/{userNo}/chpoint")
+    public ResponseEntity<Integer> selectUserCHPoint(@PathVariable Long userNo) {
+        return ResponseEntity.ok(service.selectUserCHPoint(userNo));
+    }
+
 
 
     @PutMapping("/{id}/nickname")

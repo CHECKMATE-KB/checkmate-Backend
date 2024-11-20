@@ -52,6 +52,11 @@ public class UserService {
                 .orElseThrow(NoSuchElementException::new);
     }
 
+    public int selectUserCHPoint(long userNo) {
+        int point = mapper.selectUserCHPoint(userNo);
+        return point;
+    }
+
     private void saveAvatar(MultipartFile avatar, String userId) {
         if (avatar != null && !avatar.isEmpty()) {
             File dir = new File(LOCATION + "/avatar");
