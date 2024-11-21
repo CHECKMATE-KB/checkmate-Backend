@@ -11,6 +11,8 @@ public interface UserMapper {
 
     int insertUser(User user);
 
+    int getMyTeamNo(Long userNo);
+
     void updateUser(User updateUser);
 
     void deleteUser(long userNo);

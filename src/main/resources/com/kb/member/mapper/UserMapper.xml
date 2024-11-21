@@ -46,6 +46,12 @@
         GROUP BY U.USER_NO;
     </select>
 
+    <select id="getMyTeamNo" resultType="Integer">
+        SELECT TEAM_NO
+        FROM User U
+        JOIN TeamUser T ON U.USER_NO=T.USER_NO
+        WHERE U.USER_NO = #{userNo};
+    </select>
 
     <insert id="insertUser" parameterType="com.kb.member.dto.User">
         INSERT INTO User (USER_NO, USER_ID, USER_PW, USER_NAME, EMAIL, BIRTH, USER_IMG, NICKNAME, ACCOUNT_NO)
