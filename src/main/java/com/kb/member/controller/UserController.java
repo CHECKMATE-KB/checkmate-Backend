@@ -94,6 +94,7 @@ public class UserController {
             response.put("userNo", user.getUserNo()); // userNo를 응답에 포함
             response.put("nickName", user.getNickname());
             response.put("userImg", user.getUserImg());
+            response.put("userId", user.getUserId());
 
             return ResponseEntity.ok(response); // JWT와 userNo 응답
         } else {
