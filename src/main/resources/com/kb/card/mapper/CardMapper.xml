@@ -20,6 +20,22 @@
         WHERE
         USER_NO = #{userNo}
     </select>
+    <select id="findCardNumByNo" resultType="com.kb.card.dto.CardDTO">
+        SELECT
+            CARD_NO,
+            USER_NO,
+            CARD_NAME,
+            CARD_NUMBER,
+            EXPIRY_DATE,
+            CARD_TYPE,
+            CARD_COMPANY,
+            BILLING_DATE,
+            REGISTER_DATE
+        FROM
+            Card
+        WHERE
+            CARD_NO = #{cardNo}
+    </select>
 
     <insert id="insertCard">
         INSERT INTO Card (USER_NO, CARD_NAME, CARD_NUMBER, EXPIRY_DATE, CARD_TYPE, CARD_COMPANY, BILLING_DATE)

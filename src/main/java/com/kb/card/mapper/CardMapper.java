@@ -7,4 +7,6 @@ public interface CardMapper {
 
     List<CardDTO> findCardsByUserNo(Long userNo);
     void insertCard(CardDTO cardDTO);
+
+    CardDTO findCardNumByNo(Long cardNo);
 }
