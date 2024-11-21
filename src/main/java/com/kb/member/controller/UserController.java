@@ -56,7 +56,6 @@ public class UserController {
         }
     }
 
-
     @PutMapping("/{id}/nickname")
     public ResponseEntity<?> updateNickname(@PathVariable Long id, @RequestBody Map<String, String> request) {
         try {
@@ -167,7 +166,6 @@ public class UserController {
         service.changePassword(changePassword);
         return ResponseEntity.ok().build();
     }
-
 
 
     @DeleteMapping("/{id}")
