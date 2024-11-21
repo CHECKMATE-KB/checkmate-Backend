@@ -47,7 +47,7 @@ VALUES
 -- Team 2
 INSERT INTO TeamUser(TEAM_NO, USER_NO, CH_POINT, QZ_POINT, CH_TOTAL)
 VALUES
-    (2, 6, 110, 50, 160),
+    (2, 13, 110, 50, 160),
     (2, 7, 95, 55, 150),
     (2, 8, 100, 60, 160);
 

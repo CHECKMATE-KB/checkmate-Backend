@@ -56,11 +56,16 @@ public class UserController {
                     .body("Failed to reset user points.");
         }
     }
+
     @GetMapping("/point/{userNo}/chpoint")
     public ResponseEntity<Integer> selectUserCHPoint(@PathVariable Long userNo) {
         return ResponseEntity.ok(service.selectUserCHPoint(userNo));
     }
 
+    @GetMapping("/{userNo}/myteam")
+    public ResponseEntity<Integer> getMyTeamNum(@PathVariable Long userNo) {
+        return ResponseEntity.ok(service.getMyTeamNum(userNo));
+    }
 
     @PutMapping("/{id}/nickname")
     public ResponseEntity<?> updateNickname(@PathVariable Long id, @RequestBody Map<String, String> request) {

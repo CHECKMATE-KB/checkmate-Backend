@@ -57,6 +57,12 @@ public class UserService {
         return point;
     }
 
+    public int getMyTeamNum(long userNo) {
+        int teamNo=mapper.getMyTeamNo(userNo);
+
+        return teamNo;
+    }
+
     private void saveAvatar(MultipartFile avatar, String userId) {
         if (avatar != null && !avatar.isEmpty()) {
             File dir = new File(LOCATION + "/avatar");
