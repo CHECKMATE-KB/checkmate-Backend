@@ -7,6 +7,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,4 +39,12 @@ public class CardController {
         cardService.registerCard(cardDTO);
         return "Card registered successfully!";
     }
+
+    @GetMapping("/cardNumber/{cardNo}")
+    public ResponseEntity<CardDTO> getCardByCardNo(@PathVariable Long cardNo) {
+        log.info("Fetching card by CardNo: {}", cardNo);
+        CardDTO cd = cardService.getCardNumberByNo(cardNo);
+        return ResponseEntity.ok(cd);
+    }
+
 }

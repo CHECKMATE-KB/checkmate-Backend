@@ -23,4 +23,8 @@ public class CardService {
     public void registerCard(CardDTO cardDTO) {
         cardMapper.insertCard(cardDTO);
     }
+
+    public CardDTO getCardNumberByNo(Long cardNo) {
+        return cardMapper.findCardNumByNo(cardNo);
+    }
 }
